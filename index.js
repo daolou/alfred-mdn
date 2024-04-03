@@ -2,9 +2,10 @@
 
 const alfy = require("alfy");
 const mdnDocBase = "https://developer.mozilla.org";
+const locale = process.env.locale || 'en-US';
 
 https: alfy
-  .fetch(`${mdnDocBase}/api/v1/search?q=${alfy.input}`, { transform })
+  .fetch(`${mdnDocBase}/api/v1/search?q=${alfy.input}&locale=${locale}`, { transform })
   .then((results) => {
     const items = (results || []).map((result) => {
       const { title, highlight, mdn_url } = result;
@@ -26,7 +27,7 @@ https: alfy
 
     // No results
     if (items.length === 0) {
-      const url = `${mdnDocBase}/en-US/search?q=${alfy.input}`;
+      const url = `${mdnDocBase}/${locale}/search?q=${alfy.input}`;
 
       items.push({
         title: `Show all results for '${alfy.input}'`,
@@ -43,5 +44,5 @@ function transform(body) {
 }
 
 function stripHtml(text) {
-  return text.replace(/<[^>]+>/g, "");
+  return text.replace(/<[^>]+>/g, "").replace(/&(?:amp|gt|lt|quot|#\d{2,5}|#x[\da-fA-F]{2,4});/g, "");
 }

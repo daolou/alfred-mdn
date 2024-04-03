@@ -116,6 +116,11 @@
     </dict>
     <key>webaddress</key>
     <string>https://github.com/klaascuvelier/alfred-mdn#readme</string>
+    <key>variables</key>
+  	<dict>
+  		<key>locale</key>
+  		<string>en-US</string>
+  	</dict>
     <key>version</key>
     <string>2.1.7</string>
   </dict>
